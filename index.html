@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Beta Calendars Temporal Research Lab: test ISO 8601 week-year boundaries, generate date regression cases and discover developer research through the daily.dev API." />
+  <title>Temporal Research Lab — Beta Calendars</title>
+  <style>
+    :root { --ink:#172a37;--sub:#4d6168;--paper:#f8f7f3;--line:#d9dcd5;--teal:#396b6b;--orange:#b55b41;--card:#ffffff; color-scheme:light; }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+    a{color:var(--teal);text-decoration-thickness:1px;text-underline-offset:3px}
+    .wrap{max-width:1120px;margin:auto;padding:0 30px}
+    header{height:76px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .wordmark{font-weight:700;letter-spacing:-.03em;font-size:20px;text-decoration:none;color:var(--ink)}
+    header nav{display:flex;gap:26px;font-size:13px;align-items:center}
+    .eyebrow{font-size:11px;letter-spacing:.17em;text-transform:uppercase;font-weight:700;color:var(--teal)}
+    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:70px;align-items:center;padding:88px 0 68px;border-bottom:1px solid var(--line)}
+    h1{font:normal clamp(46px,6vw,84px)/1.05 Georgia,"Times New Roman",serif;letter-spacing:-.055em;margin:14px 0 24px}
+    .lead{font-size:19px;color:var(--sub);line-height:1.7;max-width:625px}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+    .chips span{font:600 11px/1.2 ui-monospace,SFMono-Regular,monospace;border:1px solid var(--line);border-radius:3px;padding:9px 12px;background:white}
+    .mini{background:var(--card);border:1px solid var(--line);padding:27px;box-shadow:11px 13px 0 #e9ece5;transform:rotate(-1deg)}
+    .mini-top{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:13px;font:700 11px ui-monospace,SFMono-Regular,monospace;letter-spacing:.04em}
+    .week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:17px}
+    .day{min-width:0;text-align:center;border:1px solid var(--line);padding:12px 1px;background:#f9faf7}
+    .day small{display:block;font-size:9px;letter-spacing:.06em;color:var(--sub)}
+    .day strong{font:normal 26px Georgia,serif;display:block;margin-top:8px}
+    .day.hot{background:#b55b41;color:white;border-color:#b55b41}
+    .day.hot small{color:white}
+    .under{margin-top:18px;font:12px/1.6 ui-monospace,SFMono-Regular,monospace;color:var(--sub)}
+    main section{padding:55px 0;border-bottom:1px solid var(--line)}
+    h2{font:normal 38px/1.15 Georgia,"Times New Roman",serif;letter-spacing:-.028em;margin:0 0 16px}
+    .muted{color:var(--sub)}
+    .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;margin-top:32px}
+    .info{border-top:2px solid var(--ink);padding:15px 0}
+    .info h3{font-size:17px;margin:8px 0 9px}.info p{color:var(--sub);font-size:14px;margin:0;line-height:1.8}
+    .panel{background:#fff;border:1px solid var(--line);padding:32px;display:grid;grid-template-columns:.8fr 1.2fr;gap:30px;align-items:start}
+    label{display:block;font-weight:650;font-size:14px;margin-bottom:10px}
+    input{font:17px ui-monospace,SFMono-Regular,monospace;width:100%;padding:15px;border:1px solid #b6c0bb;background:var(--paper);color:var(--ink)}
+    input:focus{outline:2px solid var(--teal);outline-offset:2px}
+    .output{border-left:1px solid var(--line);padding-left:30px}
+    .iso{font:normal clamp(30px,4vw,51px) Georgia,serif;letter-spacing:-.03em;white-space:nowrap}
+    .output dl{display:grid;grid-template-columns:1fr 1fr;margin:15px 0 0;gap:14px}
+    dt{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--sub)}dd{font:600 15px ui-monospace,SFMono-Regular,monospace;margin:2px 0 0}
+    pre{background:#152b39;color:#eff5ed;padding:24px;overflow:auto;border-radius:2px;font:13px/1.7 ui-monospace,SFMono-Regular,monospace}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:50px}.two p{color:var(--sub)}
+    footer{padding:33px 0 55px;color:var(--sub);font-size:13px;display:flex;gap:20px;justify-content:space-between}
+    @media(max-width:820px){.hero,.panel,.two{grid-template-columns:1fr;gap:25px}.cols{grid-template-columns:1fr}.hero{padding:45px 0}.mini{transform:none}.output{border-left:0;border-top:1px solid var(--line);padding:25px 0 0}.wrap{padding:0 18px}header nav{gap:12px}.week .day strong{font-size:22px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header><a class="wordmark" href="https://www.betacalendars.com/">Beta Calendars<span style="color:var(--orange)">.</span></a><nav aria-label="Main navigation"><a href="#tool">ISO week check</a><a href="#workflow">Agent workflow</a><a href="https://docs.daily.dev/plugin-marketplace/">daily.dev docs ↗</a></nav></header>
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Developer tools / Research skill 01</div>
+        <h1>Time has edges.<br>Test them.</h1>
+        <p class="lead">A small research workflow for the calendar bugs that pass ordinary code review: ISO week-years, leap days, time zones and reporting boundaries. Combine deterministic date checks with real developer articles from daily.dev.</p>
+        <div class="chips"><span>ISO 8601</span><span>DATE REGRESSION TESTS</span><span>DAILY.DEV SEARCH</span><span>AGENT SKILL</span></div>
+      </div>
+      <div class="mini" aria-label="Example ISO week 53 calendar">
+        <div class="mini-top"><span>2026 · WEEK 53</span><span>ISO 8601</span></div>
+        <div class="week">
+          <div class="day"><small>MON</small><strong>28</strong><small>DEC</small></div><div class="day"><small>TUE</small><strong>29</strong><small>DEC</small></div><div class="day"><small>WED</small><strong>30</strong><small>DEC</small></div><div class="day"><small>THU</small><strong>31</strong><small>DEC</small></div><div class="day hot"><small>FRI</small><strong>01</strong><small>JAN</small></div><div class="day"><small>SAT</small><strong>02</strong><small>JAN</small></div><div class="day"><small>SUN</small><strong>03</strong><small>JAN</small></div>
+        </div>
+        <div class="under">2027-01-01 → 2026-W53-5<br>Next ISO week: 2027-W01 begins Jan 04</div>
+      </div>
+    </div>
+    <main>
+      <section><div class="eyebrow">What it does</div><h2>Research that ends in a test case.</h2><div class="cols">
+        <div class="info"><h3>01 / Calculate the boundary</h3><p>Inspect Gregorian years versus ISO week-years and produce precise Monday–Sunday intervals.</p></div>
+        <div class="info"><h3>02 / Read developer research</h3><p>Query real daily.dev posts for Temporal, timezone behavior, DST, and calendar implementation pitfalls.</p></div>
+        <div class="info"><h3>03 / Reproduce the failure</h3><p>Receive explicit regression fixtures and practical language-specific examples instead of generic calendar advice.</p></div>
+      </div></section>
+      <section id="tool"><div class="eyebrow">Interactive reference</div><h2>Check an ISO week date.</h2><p class="muted">This demo runs locally in your browser. No date is transmitted to our server or to daily.dev.</p>
+        <div class="panel"><div><label for="date">Gregorian calendar date</label><input type="date" id="date" value="2027-01-01" min="0001-01-01" max="9999-12-31" /><p class="muted" style="font-size:13px">ISO 8601 weeks start Monday. The week-year may not equal the Gregorian year.</p></div><div class="output" aria-live="polite"><div class="eyebrow">ISO week date</div><div class="iso" id="weekDate">2026-W53-5</div><dl><div><dt>Calendar year</dt><dd id="cy">2027</dd></div><div><dt>ISO week-year</dt><dd id="wy">2026</dd></div><div><dt>Week begins</dt><dd id="ws">2026-12-28</dd></div><div><dt>Week ends</dt><dd id="we">2027-01-03</dd></div></dl></div></div>
+      </section>
+      <section id="workflow"><div class="two"><div><div class="eyebrow">Agent workflow</div><h2>Designed for research assistants.</h2><p>Use the plugin's SKILL.md from its daily.dev Marketplace page with an authenticated daily.dev connection. The skill explains how to search the API, verify the dates independently, present linked sources and request approval before bookmark writes.</p><p>Its companion open-source-ready Python reference CLI runs offline date audits without any personal access token. A token is required only to retrieve personalized daily.dev data.</p></div><div><div class="eyebrow">Sample request</div><pre>"Audit the 2026–2027 ISO week
+boundary. Explain why January 1,
+2027 is in 2026-W53.
+
+Generate Python and PostgreSQL
+regression tests and find real
+related daily.dev articles."
+</pre><p class="muted">No hosted Beta Calendars API is implied. We never ask you to send your daily.dev token to this website.</p></div></div></section>
+    </main>
+    <footer><span>Beta Calendars · Temporal Research Lab</span><span>Independent skill · Not affiliated with daily.dev · <a href="https://www.betacalendars.com/">Printable calendars</a></span></footer>
+  </div>
+  <script>
+    (function () {
+      const input = document.getElementById('date');
+      const $ = (id) => document.getElementById(id);
+      const fmt = (d) => String(d.getUTCFullYear()).padStart(4,'0')+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0');
+      function calculate(s) {
+        const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');
+        if (!match) return;
+        const [y,m,day] = match.slice(1).map(Number);
+        const d = new Date(0);
+        d.setUTCHours(12,0,0,0);
+        d.setUTCFullYear(y,m-1,day);
+        if (fmt(d) !== s) return;
+        const dow = d.getUTCDay() || 7;
+        const monday = new Date(d);
+        monday.setUTCDate(d.getUTCDate()-(dow-1));
+        const thursday = new Date(d);
+        thursday.setUTCDate(d.getUTCDate()+(4-dow));
+        const weekYear = thursday.getUTCFullYear();
+        const jan4 = new Date(d);
+        jan4.setUTCFullYear(weekYear,0,4);
+        const jan4Dow=jan4.getUTCDay() || 7;
+        const firstMonday = new Date(jan4);
+        firstMonday.setUTCDate(jan4.getUTCDate()-(jan4Dow-1));
+        const week = Math.round((monday-firstMonday)/604800000)+1;
+        const sunday = new Date(monday);
+        sunday.setUTCDate(monday.getUTCDate()+6);
+        $('weekDate').textContent = String(weekYear).padStart(4,'0')+'-W'+String(week).padStart(2,'0')+'-'+dow;
+        $('cy').textContent = String(y);
+        $('wy').textContent = String(weekYear);
+        $('ws').textContent=fmt(monday);
+        $('we').textContent=fmt(sunday);
+      }
+      input.addEventListener('change',()=>calculate(input.value));
+      calculate(input.value);
+    }());
+  </script>
+</body>
+</html>

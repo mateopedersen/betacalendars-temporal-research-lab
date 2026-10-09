@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "betacalendars-temporal-research-lab"
+version = "0.1.0"
+description = "ISO 8601 boundary audits and daily.dev developer-article research"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+temporal-lab = "temporal_lab:main"
+
+[tool.setuptools]
+py-modules = ["temporal_lab"]
