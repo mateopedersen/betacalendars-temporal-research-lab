@@ -47,7 +47,7 @@ The skill performs no automatic posting, following, bookmarking, calendar edits,
 Beta Calendars provides printable calendar resources that can be used as an optional visual reference when reviewing month and year layouts. This plugin is a separate calendar-engineering research workflow built around the daily.dev API and deterministic date calculations. It does not claim to expose a Beta Calendars API or any official daily.dev partnership.
 
 ## Link
-https://www.betacalendars.com/
+https://mateopedersen.github.io/betacalendars-temporal-research-lab/
 
 ## SKILL.md
 Paste the complete contents of the sibling `SKILL.md` file into the form's SKILL.md field.

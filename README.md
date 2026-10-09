@@ -56,7 +56,7 @@ Use only a post ID obtained from an actual daily.dev result. Never commit or exp
 
 ## Landing page
 
-[`index.html`](index.html) is a responsive, standalone page with a browser-only ISO week calculator. It makes no API calls and sends no dates to a server. Deploy it only after verifying an actual hosting URL. Until then, it is a local project file, not a live landing page.
+[`index.html`](index.html) is a responsive, standalone page with a browser-only ISO week calculator. It makes no API calls and sends no dates to a server. The page is live at https://mateopedersen.github.io/betacalendars-temporal-research-lab/.
 
 ## Tests
 
